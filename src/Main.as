@@ -116,6 +116,9 @@ void ToggleAutosaveActive() {
 bool get_AutosaveCurrentlyActive() {
     if (!S_AutosaveActive) return false;
     if (S_DisableForLocal && GetApp().PlaygroundScript !is null) return false;
+    auto si = cast<CTrackManiaNetworkServerInfo>(GetApp().Network.ServerInfo);
+    // don't save if we're in an archivist game mode
+    if (si is null || si.CurGameModeStr.Contains("_Archivist_")) return false;
     return true;
 }
 
